@@ -1,0 +1,20 @@
+name: RS-Workflow
+
+on: [push, pull_request]
+
+jobs:
+  format-check:
+    runs-on: ubuntu-latest
+    steps:
+    - name: change directory
+      run : cd terraform
+    - name: Terraform Start
+      run : | 
+        terraform init
+        terraform fmt
+    
+    
+      
+
+
+
