@@ -8,6 +8,7 @@ jobs:
     steps:
     - name: Clone repo
       uses: action/checkout@v1
+      
     - name: change directory
       run : cd terraform
     - name: Terraform Start
