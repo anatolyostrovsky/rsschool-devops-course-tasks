@@ -32,7 +32,7 @@ data "aws_iam_policy_document" "oidc" {
   }
 }
 
-resource "aws_iam_role" "rs-task-role" {
+resource "aws_iam_role" "GithubActionsRole" {
   name               = "GithubActionsRole"
   assume_role_policy = data.aws_iam_policy_document.oidc.json
 }
@@ -64,7 +64,7 @@ resource "aws_iam_policy" "deploy" {
 }
 
 resource "aws_iam_role_policy_attachment" "attach-deploy" {
-  role       = aws_iam_role.rs-task-role.name
+  role       = aws_iam_role.GithubActionsRole.name
   policy_arn = aws_iam_policy.deploy.arn
 
 }
