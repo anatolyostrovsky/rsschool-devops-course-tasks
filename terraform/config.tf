@@ -6,7 +6,18 @@ terraform {
   }
 
   required_version = ">= 0.14"
+
+  backend "s3" {
+    bucket  = "rsschool-tfstate"
+    key     = "state/terraform.tfstate"
+    region  = "eu-west-2"
+    encrypt = true
+
+
+  }
 }
+
+
 
 provider "aws" {
   region = "eu-west-2"
