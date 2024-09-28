@@ -42,9 +42,9 @@ jobs:
       - name: Terraform Init
         id: init
         env:
-          AWS_BUCKET_NAME: ${{ secrets.AWS_S3_NAME }}
-          AWS_BUCKET_KEY_NAME: ${{ secrets.AWS_S3_KEY_NAME }}
-        run: terraform init -backend-config="bucket=${AWS_S3_NAME}" -backend-config="key=${AWS_S3_KEY_NAME}" -backend-config="region=${AWS_REGION}"
+          AWS_S3_NAME: ${{ secrets.AWS_S3_NAME }}
+          AWS_S3_KEY_NAME: ${{ secrets.AWS_S3_KEY_NAME }}
+        run: terraform init -backend-config="bucket=${AWS_S3_NAME}" -backend-config="key=${AWS_S3_KEY_NAME}" -backend-config="region=eu-west-2"
 
       - name: Terraform Validate
         id: validate
