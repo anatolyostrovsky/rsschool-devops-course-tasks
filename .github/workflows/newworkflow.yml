@@ -10,14 +10,14 @@ permissions:
       pull-requests: write 
 env:
   TF_LOG: INFO
-  AWS_REGION: ${{ secrets.AWS_REGION }}
+  AWS_REGION: eu-west-2
 jobs:
   deploy:
     runs-on: ubuntu-latest
     defaults:
       run:
         shell: bash
-        working-directory: .
+        working-directory: ./terraform
     steps:
       - name: Git checkout
         uses: actions/checkout@v3
@@ -25,9 +25,9 @@ jobs:
       - name: Configure AWS credentials from AWS account
         uses: aws-actions/configure-aws-credentials@v4
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE }}
-          aws-region: ${{ secrets.AWS_REGION }}
-          role-session-name: Github
+          role-to-assume: arn:aws:iam::777257465499:role/cicdrolenew
+          aws-region: eu-west-2
+          
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v2

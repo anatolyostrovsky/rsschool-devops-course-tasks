@@ -26,7 +26,7 @@ data "aws_iam_policy_document" "oidc" {
 
     condition {
       test     = "StringLike"
-      values   = ["repo:anatolyostrovsky/rsschool-devops-course-tasks/*"]
+      values   = ["repo:anatolyostrovsky/*"]
       variable = "token.actions.githubusercontent.com:sub"
     }
   }
