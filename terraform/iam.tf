@@ -1,36 +1,6 @@
 
-#-----------Creating a Role with oidc-----------------
+#-----------Creating a AWS Role -----------------
 
-resource "aws_iam_openid_connect_provider" "rs-task" {
-  url = "https://token.actions.githubusercontent.com"
-  client_id_list = [
-    "sts.amazonaws.com",
-  ]
-  thumbprint_list = var.thumbprints
-}
-
-data "aws_iam_policy_document" "oidc" {
-  statement {
-    actions = ["sts:AssumeRoleWithWebIdentity"]
-
-    principals {
-      type        = "Federated"
-      identifiers = [aws_iam_openid_connect_provider.rs-task.arn]
-    }
-
-    condition {
-      test     = "StringEquals"
-      values   = ["sts.amazonaws.com"]
-      variable = "token.actions.githubusercontent.com:aud"
-    }
-
-    condition {
-      test     = "StringLike"
-      values   = ["repo:anatolyostrovsky/*"]
-      variable = "token.actions.githubusercontent.com:sub"
-    }
-  }
-}
 
 resource "aws_iam_role" "GithubActionsRole" {
   name               = "GithubActionsRole"
