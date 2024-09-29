@@ -6,7 +6,7 @@ data "aws_iam_policy_document" "oidc" {
 
     principals {
       type        = "Federated"
-      identifiers = ["arn:aws:iam::${{ AWS_ACCOUNT_ID }}:oidc-provider/token.actions.githubusercontent.com"]
+      identifiers = ["arn:aws:iam::777257465499:oidc-provider/token.actions.githubusercontent.com"]
     }
 
     condition {
