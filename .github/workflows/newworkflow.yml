@@ -10,9 +10,8 @@ permissions:
       pull-requests: write 
 env:
   TF_LOG: INFO
-  AWS_REGION: eu-west-2
 jobs:
-  deploy:
+  terraform-check:
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -22,11 +21,11 @@ jobs:
       - name: Git checkout
         uses: actions/checkout@v3
 
-      - name: Configure AWS credentials from AWS account
+      - name: Configure AWS Role
         uses: aws-actions/configure-aws-credentials@v4
         with:
           role-to-assume: ${{ secrets.AWS_ROLE }}
-          aws-region: eu-west-2
+          aws-region: ${{ secrets.AWS_REGION }}
           
 
       - name: Setup Terraform
@@ -39,21 +38,70 @@ jobs:
         run: terraform fmt -check
         continue-on-error: true
 
+  terraform-plan:
+      runs-on: ubuntu-latest
+      defaults:
+        run:
+          shell: bash
+          working-directory: ./terraform
+      steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials from AWS account
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.5
+
       - name: Terraform Init
         id: init
         env:
           AWS_S3_NAME: ${{ secrets.AWS_S3_NAME }}
           AWS_S3_KEY_NAME: ${{ secrets.AWS_S3_KEY_NAME }}
-        run: terraform init -backend-config="bucket=${AWS_S3_NAME}" -backend-config="key=${AWS_S3_KEY_NAME}" -backend-config="region=eu-west-2"
-
-      - name: Terraform Validate
-        id: validate
-        run: terraform validate -no-color
+        run: terraform init -backend-config="bucket=${AWS_S3_NAME}" -backend-config="key=${AWS_S3_KEY_NAME}" -backend-config="region=${{ secrets.AWS_REGION }}"
 
       - name: Terraform Plan
         id: plan
         run: terraform plan -no-color
-        if: github.event_name == 'pull_request'
         continue-on-error: true
+        
+  terraform-apply:
+        runs-on: ubuntu-latest
+        defaults:
+          run:
+            shell: bash
+            working-directory: ./terraform
+        steps:
+        - name: Git checkout
+          uses: actions/checkout@v3
 
-    
+        - name: Configure AWS credentials from AWS account
+          uses: aws-actions/configure-aws-credentials@v4
+          with:
+            role-to-assume: ${{ secrets.AWS_ROLE }}
+            aws-region: ${{ secrets.AWS_REGION }}
+          
+
+        - name: Setup Terraform
+          uses: hashicorp/setup-terraform@v2
+          with:
+            terraform_version: 1.2.5
+
+        - name: Terraform Init
+          id: init
+          env:
+            AWS_S3_NAME: ${{ secrets.AWS_S3_NAME }}
+            AWS_S3_KEY_NAME: ${{ secrets.AWS_S3_KEY_NAME }}
+          run: terraform init -backend-config="bucket=${AWS_S3_NAME}" -backend-config="key=${AWS_S3_KEY_NAME}" -backend-config="region=${{ secrets.AWS_REGION }}"
+
+        - name: Terraform Apply
+          id: apply
+          run: terraform apply
+          continue-on-error: true
