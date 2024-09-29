@@ -1,12 +1,12 @@
 #-----------Creating a Role with oidc-----------------
-
+data "aws_caller_identity" "current" {}
 data "aws_iam_policy_document" "oidc" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
 
     principals {
       type        = "Federated"
-      identifiers = ["arn:aws:iam::777257465499:oidc-provider/token.actions.githubusercontent.com"]
+      identifiers = ["arn:aws:iam::${data.aws_caller_identity.current.account_id}:oidc-provider/token.actions.githubusercontent.com"]
     }
 
     condition {
