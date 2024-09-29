@@ -1,35 +1,4 @@
-
-#-----------Creating a AWS Role -----------------
-
-data "aws_iam_policy_document" "oidc" {
-  statement {
-    actions = ["sts:AssumeRoleWithWebIdentity"]
-
-    principals {
-      type        = "Federated"
-      identifiers = [aws_iam_openid_connect_provider.rs-task.arn]
-    }
-
-    condition {
-      test     = "StringEquals"
-      values   = ["sts.amazonaws.com"]
-      variable = "token.actions.githubusercontent.com:aud"
-    }
-
-    condition {
-      test     = "StringLike"
-      values   = ["repo:anatolyostrovsky/*"]
-      variable = "token.actions.githubusercontent.com:sub"
-    }
-  }
-}
-
-resource "aws_iam_role" "GithubActionsRole" {
-  name               = "GithubActionsRole"
-  assume_role_policy = data.aws_iam_policy_document.oidc.json
-}
-
-#-------------Attaching Custom Policy-----------------
+#-----------Creating Policy----------------------
 
 data "aws_iam_policy_document" "deploy" {
   statement {
@@ -48,6 +17,15 @@ data "aws_iam_policy_document" "deploy" {
     resources = ["*"]
   }
 }
+#-----------Creating an AWS Role-----------------
+
+resource "aws_iam_role" "GithubActionsRole" {
+  name               = "GithubActionsRole"
+  assume_role_policy = data.aws_iam_policy_document.deploy.json
+}
+
+#-------------Attaching Policy-----------------
+
 
 resource "aws_iam_policy" "deploy" {
   name        = "ci-deploy-policy"
