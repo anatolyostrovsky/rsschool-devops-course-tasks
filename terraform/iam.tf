@@ -6,6 +6,7 @@ data "aws_iam_policy_document" "oidc" {
 
     principals {
       type        = "Federated"
+      identifiers = [arn:aws:iam::account-id:oidc-provider/token.actions.githubusercontent.com]
     }
 
     condition {
