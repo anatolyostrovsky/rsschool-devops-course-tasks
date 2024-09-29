@@ -1,9 +1,32 @@
 
 #-----------Creating a AWS Role -----------------
 
+data "aws_iam_policy_document" "oidc" {
+  statement {
+    actions = ["sts:AssumeRoleWithWebIdentity"]
+
+    principals {
+      type        = "Federated"
+      identifiers = [aws_iam_openid_connect_provider.rs-task.arn]
+    }
+
+    condition {
+      test     = "StringEquals"
+      values   = ["sts.amazonaws.com"]
+      variable = "token.actions.githubusercontent.com:aud"
+    }
+
+    condition {
+      test     = "StringLike"
+      values   = ["repo:anatolyostrovsky/*"]
+      variable = "token.actions.githubusercontent.com:sub"
+    }
+  }
+}
 
 resource "aws_iam_role" "GithubActionsRole" {
   name               = "GithubActionsRole"
+  assume_role_policy = data.aws_iam_policy_document.oidc.json
 }
 
 #-------------Attaching Custom Policy-----------------
