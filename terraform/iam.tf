@@ -4,7 +4,6 @@
 
 resource "aws_iam_role" "GithubActionsRole" {
   name               = "GithubActionsRole"
-  assume_role_policy = data.aws_iam_policy_document.oidc.json
 }
 
 #-------------Attaching Custom Policy-----------------
