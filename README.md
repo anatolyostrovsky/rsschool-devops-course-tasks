@@ -1,6 +1,6 @@
 # RS School AWS DevOps Course Task 2
 
-
+![example workflow](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/actions/workflows/newworkflow.yml/badge.svg)
 
 
 In this task we are setting up infrastructure for future projects. Following terraform code contains Contains VPC, 2 Public and 2 Private Subnets in 2 Availability zones.
