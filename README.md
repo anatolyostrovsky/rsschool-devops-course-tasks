@@ -1,18 +1,21 @@
-# RS School AWS DevOps Course Task 1
+# RS School AWS DevOps Course Task 2
 
 ![example workflow](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/actions/workflows/newworkflow.yml/badge.svg)
 
-For the first Part of the task we have to create a non root user account secured by MFA
 
-![screen2](https://github.com/user-attachments/assets/a9b2e2ca-a2d2-4e25-8375-02e6afd82174)
+In this task we are setting up infrastructure for future projects. Following terraform code contains Contains VPC, 2 Public and 2 Private Subnets in 2 Availability zones.
+It also creates Internet Gateway fro public subnets and NAT Gateway for private ones. 
+![plan](https://github.com/user-attachments/assets/082eafe5-65ce-4230-bd59-1e9105ab9768)
 
-Next we have to make sure we have AWS CLI and Terraform installed
+After terraform plan we apply changes and create resources.
+Here we can see that everything sets up fine.
 
-![screen3](https://github.com/user-attachments/assets/6dac63e0-e5e5-4a6d-a794-902465c233cf)
+![resoucemap](https://github.com/user-attachments/assets/25cec71e-4b52-4414-8ca0-15f1fca11a5b)
 
-Then Terraform is used to create new AWS Role with required policies and encrypted S3 Bucket. The files are iam.yml for the role and bucket.yml for S3 Bucket.
-There is separate files for configuration and variables as well as outputs file to see our resources arns when they are created.
-When we are sure that code is working, it is time to create a Github Actions workflow. Here important part is to protect sensitive data with Github Secrets.
-Here we have 3 jobs to create. When one is completed the next one starts. And finally 2 new resources are created. Happy Days!
+Next we create 2 EC2 instances, each one in its own private subnet. To be able to connect to them via SSH we create EC2 Instance in public subnet, and attach a public IP to it. It will act as a Bastion Host. After this we create security groups for public and private instances and open ncessary ports. Additionaly we create key-pair and store it locally to use it with the SSH Agent. On the following screenshot you can see Bastion Host in action.
+First we add our key-pair to SSH Agent then we connect to Bastion Host Publc IP. From there we connect to our private instance using private IP. And the we check that our private EC2 is able to connect to the internet outside VPC. 
 
-![Screen4](https://github.com/user-attachments/assets/34cd4b56-75ea-4e91-a3b6-b8b3d23ab189)
+
+![bastion](https://github.com/user-attachments/assets/fb71c70e-c0d2-45e7-983a-3c7bf10cd9a9)
+
+
