@@ -1,0 +1,37 @@
+name: "Terraform Destroy"
+on: 
+  delete
+  
+permissions:
+      id-token: write 
+      contents: read 
+      pull-requests: write 
+env:
+  TF_LOG: INFO
+jobs:
+  terraform-check:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        shell: bash
+        working-directory: ./terraform
+    steps:
+      - name: Git checkout
+        uses: actions/checkout@v3
+
+      - name: Configure AWS Role
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE }}
+          aws-region: ${{ secrets.AWS_REGION }}
+          
+
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.2.5
+
+      - name: Terraform Destroy
+        id: fmt
+        run: terraform destroy -auto-approve
+        continue-on-error: true
