@@ -7,4 +7,5 @@ It also creates Internet Gateway fro public subnets and NAT Gateway for private 
 Next we create 2 EC2 instances, each one in its own private subnet. To be able to connect to them via SSH we create EC2 Instance in public subnet, and attach a public IP to it. It will act as a Bastion Host. Additionaly we create key-pair and store it locally to use it with the SSH Agent. On the following screenshot you can see Bastion Host in action.
 First we add our key-pair to SSH Agent then we connect to Bastion Host Publc IP. From there we connect to our private instance using private IP. And the we check that our private EC2 is able to connect to the internet outside VPC.
 
-![bastion](https://github.com/user-attachments/assets/4f768542-fcc1-45e6-9c7a-160fc385aa9c)
+
+![bastion](https://github.com/user-attachments/assets/fb71c70e-c0d2-45e7-983a-3c7bf10cd9a9)
