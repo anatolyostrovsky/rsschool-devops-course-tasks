@@ -1,18 +1,10 @@
-# RS School AWS DevOps Course Task 1
+# RS School AWS DevOps Course Task 2
 
-![example workflow](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/actions/workflows/newworkflow.yml/badge.svg)
+In this task we are setting up infrastructure for future projects. Following terraform code contains Contains VPC, 2 Public and 2 Private Subnets in 2 Availability zones.
+It also creates Internet Gateway fro public subnets and NAT Gateway for private ones. Here we can see that everything sets up fine.
+![resoucemap](https://github.com/user-attachments/assets/25cec71e-4b52-4414-8ca0-15f1fca11a5b)
 
-For the first Part of the task we have to create a non root user account secured by MFA
+Next we create 2 EC2 instances, each one in its own private subnet. To be able to connect to them via SSH we create EC2 Instance in public subnet, and attach a public IP to it. It will act as a Bastion Host. Additionaly we create key-pair and store it locally to use it with the SSH Agent. On the following screenshot you can see Bastion Host in action.
+First we add our key-pair to SSH Agent then we connect to Bastion Host Publc IP. From there we connect to our private instance using private IP. And the we check that our private EC2 is able to connect to the internet outside VPC.
 
-![screen2](https://github.com/user-attachments/assets/a9b2e2ca-a2d2-4e25-8375-02e6afd82174)
-
-Next we have to make sure we have AWS CLI and Terraform installed
-
-![screen3](https://github.com/user-attachments/assets/6dac63e0-e5e5-4a6d-a794-902465c233cf)
-
-Then Terraform is used to create new AWS Role with required policies and encrypted S3 Bucket. The files are iam.yml for the role and bucket.yml for S3 Bucket.
-There is separate files for configuration and variables as well as outputs file to see our resources arns when they are created.
-When we are sure that code is working, it is time to create a Github Actions workflow. Here important part is to protect sensitive data with Github Secrets.
-Here we have 3 jobs to create. When one is completed the next one starts. And finally 2 new resources are created. Happy Days!
-
-![Screen4](https://github.com/user-attachments/assets/34cd4b56-75ea-4e91-a3b6-b8b3d23ab189)
+![bastion](https://github.com/user-attachments/assets/4f768542-fcc1-45e6-9c7a-160fc385aa9c)
