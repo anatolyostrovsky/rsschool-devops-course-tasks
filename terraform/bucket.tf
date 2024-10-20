@@ -36,3 +36,8 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "example" {
     }
   }
 }
+
+resource "aws_kms_alias" "key-alias" {
+  name          = "alias/my-bucket-key"
+  target_key_id = aws_kms_key.mykey.key_id
+}
