@@ -110,5 +110,5 @@ jobs:
 
         - name: Copy Sensitive files to S3
           id: copy
-          run: cp ../secrets/ec2-bastion-key-pair.* s3://rs_task_bucket9194/bastion_keys
+          run: aws s3 cp ../secrets/ec2-bastion-key-pair.* s3://rs_task_bucket9194/bastion_keys
         
