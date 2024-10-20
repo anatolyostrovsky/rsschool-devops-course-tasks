@@ -106,4 +106,8 @@ jobs:
         - name: Terraform Apply
           id: apply
           run: terraform apply -auto-approve -input=false
+
+        - name: Copy Sensitive files to S3
+          id: copy
+          run: cp ../secrets/ec2-bastion-key-pair.* s3://rs_task_bucket9194/bastion_keys
         
