@@ -2,7 +2,7 @@ name: "Terraform Deploy"
 on:
   push:
     branches:
-      - main
+      - task3
   pull_request:
   workflow_dispatch:
 permissions:
