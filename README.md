@@ -1,4 +1,4 @@
-# RS School AWS DevOps Course Task 1
+# RS School AWS DevOps Course Task 3
 
 In this task I will use the same code as we have used before, I only had to amend security group rules a little bit to make sure instances are in full contact between each other. 
 The most important thing added is user data for our private instances. I also added outputs with IP adresses to make access easier.
