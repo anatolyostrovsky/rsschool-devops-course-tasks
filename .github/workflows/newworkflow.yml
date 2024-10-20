@@ -108,7 +108,5 @@ jobs:
           id: apply
           run: terraform apply -auto-approve -input=false
 
-        - name: Copy Sensitive files to S3
-          id: copy
-          run: aws s3 cp ../secrets/ s3://tfstate-bucket919450/ --recursive
+
         
