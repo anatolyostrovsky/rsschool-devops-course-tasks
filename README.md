@@ -1,18 +1,12 @@
 # RS School AWS DevOps Course Task 1
 
-![example workflow](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/actions/workflows/newworkflow.yml/badge.svg)
+In this task I will use the same code as we have used before, I only had to amend security group rules a little bit to make sure instances are in full contact between each other. 
+The most important thing added is user data for our private instances. I also added outputs with IP adresses to make access easier.
 
-For the first Part of the task we have to create a non root user account secured by MFA
+![cluster2](https://github.com/user-attachments/assets/3ffa367e-adb7-4128-8861-ef20e42045b6)
 
-![screen2](https://github.com/user-attachments/assets/a9b2e2ca-a2d2-4e25-8375-02e6afd82174)
+When we know the IPs we can use bastion host to access the server via Bastion host and run some kubectl commands.
 
-Next we have to make sure we have AWS CLI and Terraform installed
+![cluster4](https://github.com/user-attachments/assets/7c8d2277-285c-46df-852b-0a7414be5041)
 
-![screen3](https://github.com/user-attachments/assets/6dac63e0-e5e5-4a6d-a794-902465c233cf)
-
-Then Terraform is used to create new AWS Role with required policies and encrypted S3 Bucket. The files are iam.yml for the role and bucket.yml for S3 Bucket.
-There is separate files for configuration and variables as well as outputs file to see our resources arns when they are created.
-When we are sure that code is working, it is time to create a Github Actions workflow. Here important part is to protect sensitive data with Github Secrets.
-Here we have 3 jobs to create. When one is completed the next one starts. And finally 2 new resources are created. Happy Days!
-
-![Screen4](https://github.com/user-attachments/assets/34cd4b56-75ea-4e91-a3b6-b8b3d23ab189)
+Our Kubernetes cluster is up and running! 
