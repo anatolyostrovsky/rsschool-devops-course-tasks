@@ -13,6 +13,6 @@ Next we have to make sure we have AWS CLI and Terraform installed
 Then Terraform is used to create new AWS Role with required policies and encrypted S3 Bucket. The files are iam.yml for the role and bucket.yml for S3 Bucket.
 There is separate files for configuration and variables as well as outputs file to see our resources arns when they are created.
 When we are sure that code is working, it is time to create a Github Actions workflow. Here important part is to protect sensitive data with Github Secrets.
-Here we have 3 jobs to create. When one is completed the next one starts. And finally 2 new resources are created. Happy Days!
+Here we have 3 jobs to create. When one is completed the next one starts. And finally 2 new resources are created. Happy Days! :)
 
 ![Screen4](https://github.com/user-attachments/assets/34cd4b56-75ea-4e91-a3b6-b8b3d23ab189)
