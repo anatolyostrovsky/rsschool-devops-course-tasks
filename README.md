@@ -1,18 +1,73 @@
-# RS School AWS DevOps Course Task 1
+# RS School AWS DevOps Course Task 4
 
-![example workflow](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/actions/workflows/newworkflow.yml/badge.svg)
 
-For the first Part of the task we have to create a non root user account secured by MFA
 
-![screen2](https://github.com/user-attachments/assets/a9b2e2ca-a2d2-4e25-8375-02e6afd82174)
+In this task we are installing jenkins service on our k3s cluster via Helm.
+Jenkins files repository:
+[https://github.com/anatolyostrovsky/rsschool-jenkins-files]
 
-Next we have to make sure we have AWS CLI and Terraform installed
+First we need to install helm by running this command:
+```
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash 
+```
+Next we update helm repositories and install NginX chart to make sure that all works fine:
 
-![screen3](https://github.com/user-attachments/assets/6dac63e0-e5e5-4a6d-a794-902465c233cf)
+![chart](https://github.com/user-attachments/assets/446eac10-52a1-4a26-b91f-70acf3fa2c77)
 
-Then Terraform is used to create new AWS Role with required policies and encrypted S3 Bucket. The files are iam.yml for the role and bucket.yml for S3 Bucket.
-There is separate files for configuration and variables as well as outputs file to see our resources arns when they are created.
-When we are sure that code is working, it is time to create a Github Actions workflow. Here important part is to protect sensitive data with Github Secrets.
-Here we have 3 jobs to create. When one is completed the next one starts. And finally 2 new resources are created. Happy Days!
+Now we can move on and install jenkins. First we need to create new namespace by running:
+```
+sudo kubectl create namespace jenkins
+```
 
-![Screen4](https://github.com/user-attachments/assets/34cd4b56-75ea-4e91-a3b6-b8b3d23ab189)
+Next we clone our yaml files from our new repository to setup Jenkins correctly
+
+
+```
+git clone https://github.com/anatolyostrovsky/rsschool-jenkins-files
+```
+
+
+
+
+Then create PV and PVC by applying jenkins-pv.yaml and service account by applying jenkins-sa.yaml from my new github repository:
+```
+sudo kubectl apply -f rsschool-jenkins-files/jenkins-pv.yaml
+sudo kubectl apply -f rsschool-jenkins-files/jenkins-sa.yaml
+```
+
+
+```
+helm repo add jenkinsci https://charts.jenkins.io
+helm repo update
+
+```
+Then we use jenkins-values.yaml from the same repository to install jenkins chart using the values provided.
+```
+chart=jenkinsci/jenkins
+helm install jenkins -n jenkins -f rsschool-jenkins-files/jenkins-values.yaml $chart
+```
+![jenkins-install](https://github.com/user-attachments/assets/19945a7e-d2ff-408a-8f1b-d72b737fdd20)
+
+Then we get the password and link to login to our jenkins.
+
+To access my jenkins service from local machine I used SSH Tunnel with Port Forwarding using Bastion host.
+(I could not figure it out how to expose service via Load Balancer or Ingress and I lost so much time trying to achieve it that I just gave up for a while, I'll come back to this later)
+Basically we need to update our command with values that Jenkins gives us:
+
+```
+ssh -i my-key.pem ec2-user@<public-host-ip> -L 8080:<k3s-private-service-ip>:<jenkins-provided-port>
+```
+And then we are able to connect to our service on https://localhost:8080
+
+We login to jenkins with our credentials
+![Screenshot from 2024-11-03 00-42-42](https://github.com/user-attachments/assets/df596d5e-9f46-49be-876d-29be4ed142b6)
+
+And then create freestyle project that does following
+```
+echo "Hello World"
+```
+![Screenshot from 2024-11-03 00-48-21](https://github.com/user-attachments/assets/0a2ad9a8-05f6-40f0-8e2c-fa9a8489d7b3)
+
+
+
+
