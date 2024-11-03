@@ -6,7 +6,7 @@ In this task we are installing jenkins service on our k3s cluster via Helm.
 Jenkins files repository:
 [https://github.com/anatolyostrovsky/rsschool-jenkins-files]
 
-First we need to ijnstall helm by running this command:
+First we need to install helm by running this command:
 ```
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash 
 ```
