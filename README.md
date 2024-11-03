@@ -52,11 +52,13 @@ Then we get the password and link to login to our jenkins.
 
 To access my jenkins service from local machine I used SSH Tunnel with Port Forwarding using Bastion host.
 (I could not figure it out how to expose service via Load Balancer or Ingress and I lost so much time trying to achieve it that I just gave up for a while, I'll come back to this later)
-
+Basically we need to update our command with values that Jenkins gives us:
 
 ```
 ssh -i my-key.pem ec2-user@<public-host-ip> -L 8080:<k3s-private-service-ip>:<jenkins-provided-port>
 ```
+And then we are able to connect to our service on https://localhost:8000
+
 We login to jenkins with our credentials
 ![Screenshot from 2024-11-03 00-42-42](https://github.com/user-attachments/assets/df596d5e-9f46-49be-876d-29be4ed142b6)
 
