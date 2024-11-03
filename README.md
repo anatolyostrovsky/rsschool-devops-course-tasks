@@ -1,6 +1,11 @@
 # RS School AWS DevOps Course Task 4
 
+
+
 In this task we are installing jenkins service on our k3s cluster via Helm.
+Jenkins files repository:
+[https://github.com/anatolyostrovsky/rsschool-jenkins-files]
+
 First we need to ijnstall helm by running this command:
 ```
 curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash 
@@ -14,7 +19,8 @@ Now we can move on and install jenkins. First we need to create new namespace by
 sudo kubectl create namespace jenkins
 ```
 
-Next we clone our yaml files to setup Jenkins correctly
+Next we clone our yaml files from our new repository to setup Jenkins correctly
+
 
 ```
 git clone https://github.com/anatolyostrovsky/rsschool-jenkins-files
