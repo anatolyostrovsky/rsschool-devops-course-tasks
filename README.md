@@ -10,13 +10,24 @@ Next we update helm repositories and install NginX chart to make sure that all w
 ![chart](https://github.com/user-attachments/assets/446eac10-52a1-4a26-b91f-70acf3fa2c77)
 
 Now we can move on and install jenkins. First we need to create new namespace by running:
-
 ```
 sudo kubectl create namespace jenkins
 ```
 
-Then create PV and PVC by applying jenkins-pv.yaml and service account by applying jenkins-sa.yaml from my new github repository:
+Next we clone our yaml files to setup Jenkins correctly
 
+```
+git clone https://github.com/anatolyostrovsky/rsschool-jenkins-files
+```
+
+
+
+
+Then create PV and PVC by applying jenkins-pv.yaml and service account by applying jenkins-sa.yaml from my new github repository:
+```
+sudo kubectl apply -f rsschool-jenkins-files/jenkins-pv.yaml
+sudo kubectl apply -f rsschool-jenkins-files/jenkins-sa.yaml
+```
 
 
 ```
@@ -27,7 +38,7 @@ helm repo update
 Then we use jenkins-values.yaml from the same repository to install jenkins chart using the values provided.
 ```
 chart=jenkinsci/jenkins
-helm install jenkins -n jenkins -f jenkins-values.yaml $chart
+helm install jenkins -n jenkins -f rsschool-jenkins-files/jenkins-values.yaml $chart
 ```
 ![jenkins-install](https://github.com/user-attachments/assets/19945a7e-d2ff-408a-8f1b-d72b737fdd20)
 
