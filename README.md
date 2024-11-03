@@ -57,7 +57,7 @@ Basically we need to update our command with values that Jenkins gives us:
 ```
 ssh -i my-key.pem ec2-user@<public-host-ip> -L 8080:<k3s-private-service-ip>:<jenkins-provided-port>
 ```
-And then we are able to connect to our service on https://localhost:8000
+And then we are able to connect to our service on https://localhost:8080
 
 We login to jenkins with our credentials
 ![Screenshot from 2024-11-03 00-42-42](https://github.com/user-attachments/assets/df596d5e-9f46-49be-876d-29be4ed142b6)
