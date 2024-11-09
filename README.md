@@ -25,7 +25,9 @@ export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 helm install wordpress wordpress-chart
 echo "Wordpress service is now live and available on port 30080"
 ```
+We can check that our service is up and running using ```kubectl get svc```
 ![svc-wp2](https://github.com/user-attachments/assets/ce82ecf3-e552-45bd-91e2-cf5dbc7752d0)
 
 Now our Wordpress is available on port 30080 on our public IP.
 ![wp](https://github.com/user-attachments/assets/6307ff84-221b-4a2c-af0c-1f73ed9a7f2c)
+That is everything necessary to complete task 5 :)
