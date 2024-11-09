@@ -1,18 +1,31 @@
-# RS School AWS DevOps Course Task 1
+# RS School AWS DevOps Course Task 5
 
-![example workflow](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/actions/workflows/newworkflow.yml/badge.svg)
+In this task we are creating helm chart for Wordpress application an installing it.
+Git repository with chart files is [here](https://github.com/anatolyostrovsky/wp-helm-chart).
 
-For the first Part of the task we have to create a non root user account secured by MFA
 
-![screen2](https://github.com/user-attachments/assets/a9b2e2ca-a2d2-4e25-8375-02e6afd82174)
+To install the app we update our instance user data with following code:
+```
+#!/bin/bash
 
-Next we have to make sure we have AWS CLI and Terraform installed
+curl -sfL https://get.k3s.io | sh -
+sudo chmod 644 /etc/rancher/k3s/k3s.yaml
+echo "k3s server installed sucessfully"
 
-![screen3](https://github.com/user-attachments/assets/6dac63e0-e5e5-4a6d-a794-902465c233cf)
+curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+echo "Helm installed successfully"
 
-Then Terraform is used to create new AWS Role with required policies and encrypted S3 Bucket. The files are iam.yml for the role and bucket.yml for S3 Bucket.
-There is separate files for configuration and variables as well as outputs file to see our resources arns when they are created.
-When we are sure that code is working, it is time to create a Github Actions workflow. Here important part is to protect sensitive data with Github Secrets.
-Here we have 3 jobs to create. When one is completed the next one starts. And finally 2 new resources are created. Happy Days!
+sudo yum install git -y
+sudo git clone https://github.com/anatolyostrovsky/wp-helm-chart.git
+echo "Git installed and chart repository copied"
 
-![Screen4](https://github.com/user-attachments/assets/34cd4b56-75ea-4e91-a3b6-b8b3d23ab189)
+cd wp-helm-chart
+sudo su
+export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
+helm install wordpress wordpress-chart
+echo "Wordpress service is now live and available on port 30080"
+```
+![svc-wp2](https://github.com/user-attachments/assets/ce82ecf3-e552-45bd-91e2-cf5dbc7752d0)
+
+Now our Wordpress is available on port 30080 on our public IP.
+![wp](https://github.com/user-attachments/assets/6307ff84-221b-4a2c-af0c-1f73ed9a7f2c)
