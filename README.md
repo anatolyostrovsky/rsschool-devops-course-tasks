@@ -1,7 +1,5 @@
 # RS School AWS DevOps Course Task 1
 
-![example workflow](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/actions/workflows/newworkflow.yml/badge.svg)
-
 For the first Part of the task we have to create a non root user account secured by MFA
 
 ![screen2](https://github.com/user-attachments/assets/a9b2e2ca-a2d2-4e25-8375-02e6afd82174)
