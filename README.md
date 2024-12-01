@@ -1,18 +1,46 @@
-# RS School AWS DevOps Course Task 1
+# RS School AWS DevOps Course Task 7
 
-![example workflow](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/actions/workflows/newworkflow.yml/badge.svg)
+For this task I am using my Wordpress cluster created in task 5. I updated my script with following command:
+```
+kubectl create namespace monitoring
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo update
 
-For the first Part of the task we have to create a non root user account secured by MFA
+echo "server:
+  service:
+    type: NodePort
+    nodePort: 30099
 
-![screen2](https://github.com/user-attachments/assets/a9b2e2ca-a2d2-4e25-8375-02e6afd82174)
+additionalScrapeConfigs:
+  - job_name: 'mysql'
+    static_configs:
+      - targets: ['mysql-exporter-prometheus-mysql-exporter:9104']
 
-Next we have to make sure we have AWS CLI and Terraform installed
+extraScrapeConfigsSecret:
+  enabled: true
 
-![screen3](https://github.com/user-attachments/assets/6dac63e0-e5e5-4a6d-a794-902465c233cf)
+nodeExporter:
+  enabled: true
 
-Then Terraform is used to create new AWS Role with required policies and encrypted S3 Bucket. The files are iam.yml for the role and bucket.yml for S3 Bucket.
-There is separate files for configuration and variables as well as outputs file to see our resources arns when they are created.
-When we are sure that code is working, it is time to create a Github Actions workflow. Here important part is to protect sensitive data with Github Secrets.
-Here we have 3 jobs to create. When one is completed the next one starts. And finally 2 new resources are created. Happy Days!
+mysql-exporter-prometheus-mysql-exporter:
+  enabled: true
+  service:
+    port: 9104" > values.yaml
 
-![Screen4](https://github.com/user-attachments/assets/34cd4b56-75ea-4e91-a3b6-b8b3d23ab189)
+helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace monitoring
+    
+helm install prometheus prometheus-community/prometheus --namespace monitoring -f values.yaml
+echo "Prometheus installed and running on port 30099"
+```
+This will install Prometheus and additional exporters in a new namespace. It will also expose it on port 30099.
+
+![prometheus-svc](https://github.com/user-attachments/assets/5ed705af-10ed-4ebd-8997-9d5538243e76)
+
+All necessary services are running so we can access our prometheus server and check it by running simple query checking memory usage.
+```
+node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+```
+
+![prometheus_memory](https://github.com/user-attachments/assets/e613e9cb-f5fb-40ce-b70d-351e30adf0a1)
+
+Everything seems to be working just fine.
