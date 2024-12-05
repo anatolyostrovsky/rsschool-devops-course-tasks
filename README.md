@@ -8,7 +8,7 @@ kubectl get pods -n monitoring
 ![grafana-pods](https://github.com/user-attachments/assets/c5d40c4b-80e0-40c1-b3b8-38a81929f450)
 
 
-We can access grafana on our public IP on port 30098. Next I login to Grafana server and add Prometheus as a data source
+We can access grafana on our public IP on port 30098. Next we can login to Grafana server and add Prometheus as a data source
 
 
 ![grafana-data-dource](https://github.com/user-attachments/assets/48d6b856-a683-425b-940d-f85917a43853)
