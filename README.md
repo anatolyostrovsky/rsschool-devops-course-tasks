@@ -5,7 +5,8 @@ Grafana will be installed in a "monitoring" namespace together with Prometheus. 
 ```
 kubectl get pods -n monitoring
 ```
-![grafana-pods](https://github.com/user-attachments/assets/c5d40c4b-80e0-40c1-b3b8-38a81929f450)
+![grafana-pods](https://github.com/user-attachments/assets/a6d9a91f-a129-4eb8-a476-8e42b4dd49f5)
+
 
 
 We can access grafana on our public IP on port 30098. Next we can login to Grafana server and add Prometheus as a data source
