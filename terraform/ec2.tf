@@ -8,7 +8,7 @@ resource "aws_instance" "bastion-host-rs" {
   security_groups             = [aws_security_group.bastion-host-sg.id]
   subnet_id                   = aws_subnet.public-subnet-2.id
   associate_public_ip_address = false
-  user_data = file("user-data-bastion.sh")
+  user_data = file("user-data.sh")
 }
 
 resource "aws_eip" "ec2-bastion-host-eip" {

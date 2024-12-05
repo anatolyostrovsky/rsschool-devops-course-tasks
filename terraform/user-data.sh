@@ -20,6 +20,7 @@ echo "Wordpress service is now live and available on port 30080"
 cd ..
 kubectl create namespace monitoring
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
 
 echo "server:
@@ -48,5 +49,11 @@ helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --nam
 helm install prometheus prometheus-community/prometheus --namespace monitoring -f values.yaml
 echo "Prometheus installed and running on port 30099"
 
-    
+helm install grafana grafana/grafana \
+  --namespace monitoring \
+  --set service.type=NodePort \
+  --set service.nodePort=30098 \
+  --set adminPassword=qwerty
+
+echo "Grafana installed and running on port 30098, username = admin, password = qwerty, please change it with your first login."
 
