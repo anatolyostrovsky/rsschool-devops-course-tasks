@@ -8,15 +8,16 @@ kubectl get pods -n monitoring
 ![grafana-pods](https://github.com/user-attachments/assets/c5d40c4b-80e0-40c1-b3b8-38a81929f450)
 
 
-This will install Prometheus and additional exporters in a new namespace. It will also expose it on port 30099.
+We can access grafana on our public IP on port 30098. Next I login to Grafana server and add Prometheus as a data source
 
-![prometheus-svc](https://github.com/user-attachments/assets/5ed705af-10ed-4ebd-8997-9d5538243e76)
 
-All necessary services are running so we can access our prometheus server and check it by running simple query checking memory usage.
-```
-node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
-```
+![grafana-data-dource](https://github.com/user-attachments/assets/48d6b856-a683-425b-940d-f85917a43853)
 
-![prometheus_memory](https://github.com/user-attachments/assets/e613e9cb-f5fb-40ce-b70d-351e30adf0a1)
+Now we can start creating new dashboards. Here is what I have, I know it is quite simple but it is something:
 
-Everything seems to be working just fine.
+
+![grafana-dash](https://github.com/user-attachments/assets/1de226af-4872-4fea-9cfd-4001155faaa8)
+
+And finally here is a link to  the [JSON file](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/blob/task8/dashboard-1.json) for the dashboard.
+
+The only thing I haven't done is to create a password secret so feel free to remove 10 points for that.
