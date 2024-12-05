@@ -1,37 +1,13 @@
-# RS School AWS DevOps Course Task 7
+# RS School AWS DevOps Course Task 8
 
-For this task I am using my Wordpress cluster created in task 5. I updated my script with following command:
+For this task I am updating my user-data to install Grafana via IaC. [Click here](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/blob/task8/terraform/user-data.sh) to check the script.
+Grafana will be installed in a "monitoring" namespace together with Prometheus. To verify installation we can run:
 ```
-kubectl create namespace monitoring
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
-
-echo "server:
-  service:
-    type: NodePort
-    nodePort: 30099
-
-additionalScrapeConfigs:
-  - job_name: 'mysql'
-    static_configs:
-      - targets: ['mysql-exporter-prometheus-mysql-exporter:9104']
-
-extraScrapeConfigsSecret:
-  enabled: true
-
-nodeExporter:
-  enabled: true
-
-mysql-exporter-prometheus-mysql-exporter:
-  enabled: true
-  service:
-    port: 9104" > values.yaml
-
-helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace monitoring
-    
-helm install prometheus prometheus-community/prometheus --namespace monitoring -f values.yaml
-echo "Prometheus installed and running on port 30099"
+kubectl get pods -n monitoring
 ```
+![grafana-pods](https://github.com/user-attachments/assets/c5d40c4b-80e0-40c1-b3b8-38a81929f450)
+
+
 This will install Prometheus and additional exporters in a new namespace. It will also expose it on port 30099.
 
 ![prometheus-svc](https://github.com/user-attachments/assets/5ed705af-10ed-4ebd-8997-9d5538243e76)
