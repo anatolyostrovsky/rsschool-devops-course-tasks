@@ -23,9 +23,9 @@ data:
     cert_file =
     key_file =
     skip_verify = true
-    from_address = anatolijs@ostrovskis.net
+    from_address = #Update your sending adress
     from_name = Anatolijs
-    ehlo_identity = ostrovskis.net
+    ehlo_identity = #Update your domain
 kind: ConfigMap
 metadata:
   annotations:
