@@ -1,46 +1,34 @@
-# RS School AWS DevOps Course Task 7
+# RS School AWS DevOps Course Task 9
 
-For this task I am using my Wordpress cluster created in task 5. I updated my script with following command:
+For this task I am updating my Grafana configuration with new values to configure SMTP. I am using Amazon SES.
+I have a values file ready to be updated and used here. Next we use updated values.yaml and run following commands to update and restart Grafana.
 ```
-kubectl create namespace monitoring
-helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
-helm repo update
+kubectl apply -f grafana.yaml -n monitoring
+kubectl rollout restart deployment grafana -n monitoring
 
-echo "server:
-  service:
-    type: NodePort
-    nodePort: 30099
-
-additionalScrapeConfigs:
-  - job_name: 'mysql'
-    static_configs:
-      - targets: ['mysql-exporter-prometheus-mysql-exporter:9104']
-
-extraScrapeConfigsSecret:
-  enabled: true
-
-nodeExporter:
-  enabled: true
-
-mysql-exporter-prometheus-mysql-exporter:
-  enabled: true
-  service:
-    port: 9104" > values.yaml
-
-helm install mysql-exporter prometheus-community/prometheus-mysql-exporter --namespace monitoring
-    
-helm install prometheus prometheus-community/prometheus --namespace monitoring -f values.yaml
-echo "Prometheus installed and running on port 30099"
 ```
-This will install Prometheus and additional exporters in a new namespace. It will also expose it on port 30099.
+Next I am creating Contact Points and sending Test e-mail to verify my SMTP setup. 
+![contact-points](https://github.com/user-attachments/assets/50ee7493-0364-4f2b-a8f6-1c921d13d531)
 
-![prometheus-svc](https://github.com/user-attachments/assets/5ed705af-10ed-4ebd-8997-9d5538243e76)
 
-All necessary services are running so we can access our prometheus server and check it by running simple query checking memory usage.
+Now I can start creating Alert Rules:
+![cpu-alert](https://github.com/user-attachments/assets/7b08d6b7-2bb8-46c5-a55d-9349e869fa5e)
+![memory-alert](https://github.com/user-attachments/assets/6c473d48-a11c-4a3a-8601-ae435e16061b)
+
+Then I can run stress command to maximize cpu usage (stress and sysbench are installed automatically via user-data)
+
+
 ```
-node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes
+stress --cpu 2
 ```
+![cpu-alert2](https://github.com/user-attachments/assets/a47cd7c2-a5c7-4b87-8737-1fbf13b27aa5)
+![ram-percent](https://github.com/user-attachments/assets/e9c21c9e-1feb-423e-9e30-15668727483e)
 
-![prometheus_memory](https://github.com/user-attachments/assets/e613e9cb-f5fb-40ce-b70d-351e30adf0a1)
+Shortly I am recieving an email alerts!
+
+![Screenshot from 2024-12-14 18-39-18](https://github.com/user-attachments/assets/b2719d76-3e74-4c91-a85d-33ca0fbdec42)
+![Screenshot from 2024-12-14 18-38-47](https://github.com/user-attachments/assets/d0d3b143-1558-43e1-bcb9-d28d167f7b20)
+
+
 
 Everything seems to be working just fine.
