@@ -57,3 +57,6 @@ helm install grafana grafana/grafana \
 
 echo "Grafana installed and running on port 30098, username = admin, password = qwerty, please change it with your first login."
 
+yum install stress
+yum install sysbench
+
