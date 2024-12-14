@@ -1,7 +1,7 @@
 # RS School AWS DevOps Course Task 9
 
 For this task I am updating my Grafana configuration with new values to configure SMTP. I am using Amazon SES.
-I have a values file ready to be updated and used here. Next we use updated values.yaml and run following commands to update and restart Grafana.
+I have a values file ready to be updated and used [here](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/blob/task9/grafana.yaml). Next we use updated values.yaml and run following commands to update and restart Grafana.
 ```
 kubectl apply -f grafana.yaml -n monitoring
 kubectl rollout restart deployment grafana -n monitoring
