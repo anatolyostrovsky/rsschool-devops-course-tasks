@@ -25,9 +25,8 @@ stress --cpu 2
 ![ram-percent](https://github.com/user-attachments/assets/e9c21c9e-1feb-423e-9e30-15668727483e)
 
 Shortly I am recieving an email alerts!
-
-![Screenshot from 2024-12-14 18-39-18](https://github.com/user-attachments/assets/b2719d76-3e74-4c91-a85d-33ca0fbdec42)
-![Screenshot from 2024-12-14 18-38-47](https://github.com/user-attachments/assets/d0d3b143-1558-43e1-bcb9-d28d167f7b20)
+![email-ram](https://github.com/user-attachments/assets/2238f66c-f1d4-47ec-b10f-6e6545dfeebd)
+![email-cpu](https://github.com/user-attachments/assets/682a2d7c-1cd7-49df-9758-26fc0694598d)
 
 
 
