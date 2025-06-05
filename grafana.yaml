@@ -1,0 +1,46 @@
+  GNU nano 5.8                                                                  grafana.yaml                                                                             
+apiVersion: v1
+data:
+  grafana.ini: |
+    [analytics]
+    check_for_updates = true
+    [grafana_net]
+    url = https://grafana.net
+    [log]
+    mode = console
+    [paths]
+    data = /var/lib/grafana/
+    logs = /var/log/grafana
+    plugins = /var/lib/grafana/plugins
+    provisioning = /etc/grafana/provisioning
+    [server]
+    domain = ''
+    [smtp]
+    enabled = true
+    host = email-smtp.eu-west-2.amazonaws.com:587
+    user = #Update your username
+    password = #Update your password
+    cert_file =
+    key_file =
+    skip_verify = true
+    from_address = #Update your sending adress
+    from_name = Anatolijs
+    ehlo_identity = #Update your domain
+kind: ConfigMap
+metadata:
+  annotations:
+    meta.helm.sh/release-name: grafana
+    meta.helm.sh/release-namespace: monitoring
+  creationTimestamp: "2024-12-14T16:28:49Z"
+  labels:
+    app.kubernetes.io/instance: grafana
+    app.kubernetes.io/managed-by: Helm
+    app.kubernetes.io/name: grafana
+    app.kubernetes.io/version: 11.4.0
+    helm.sh/chart: grafana-8.7.0
+  name: grafana
+  namespace: monitoring
+  resourceVersion: "667"
+  uid: 944cd683-4ce3-479a-b641-c2ac7b5092e7
+
+
