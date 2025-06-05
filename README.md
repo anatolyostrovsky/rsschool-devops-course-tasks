@@ -1,4 +1,4 @@
-# RS School AWS DevOps Course Task 9
+# Alerts Configuration
 
 For this task I am updating my Grafana configuration with new values to configure SMTP. I am using Amazon SES.
 I have a values file ready to be updated and used [here](https://github.com/anatolyostrovsky/rsschool-devops-course-tasks/blob/task9/grafana.yaml). Next we use updated values.yaml and run following commands to update and restart Grafana.
